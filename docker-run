@@ -22,12 +22,8 @@ echo -e "\n \033[01;32m REMOVE CONTAINER \033[01;37m"
 
 docker rm ${CONTAINER}
 
-echo -e "\n \033[01;32m DOCKER PULL \033[01;37m"
-
-docker pull "${REPO_IMAGES}/${IMAGE_NAME}::latest"
-
 echo -e "\n \033[01;32m RUN CONTAINER \033[01;37m"
-docker run -p ${PORT}:${PORT} "${IMAGE_NAME}:latest"
+#docker run -p ${PORT}:${PORT} "${IMAGE_NAME}:latest"
 
 docker run -d \
         --name $HUBOT_NAME \
@@ -40,3 +36,8 @@ docker run -d \
         -p 8989:8989 \
         -v $PWD/scripts:/home/hubot/scripts \
         ${REPO_IMAGES}/${IMAGE_NAME}:${TAG}
+
+
+echo -e "\n \033[01;32m DOCKER PULL \033[01;37m"
+
+#docker pull "${REPO_IMAGES}/${IMAGE_NAME}::latest"
