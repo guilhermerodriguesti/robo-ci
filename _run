@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+$PWD/git-build
+
+$PWD/docker-build
+
+$PWD/docker-run
+
+$PWD/docker-push

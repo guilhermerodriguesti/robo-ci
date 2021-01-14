@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+USER="infraestruturadevops"
+REPO_IMAGES="${USER}"
+
+IMAGE_NAME=$(basename "$PWD")
+TAG=`git rev-parse --short HEAD`
+
+echo -e "\n \033[01;32m BUILD IMAGE \033[01;37m"
+
+docker build --no-cache \
+    -t ${REPO_IMAGES}/${IMAGE_NAME}:${TAG} \
+    -t ${REPO_IMAGES}/${IMAGE_NAME}:latest . 

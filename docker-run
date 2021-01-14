@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+USER="infraestruturadevops"
+REPO_IMAGES="${USER}"
+
+IMAGE_NAME=$(basename "$PWD")
+TAG=`git rev-parse --short HEAD`
+CONTAINER="${IMAGE_NAME}"
+
+export HUBOT_NAME="${CONTAINER}"
+export HUBOT_SLACK_TOKEN="xoxb-YOUR-SLACK-TOKEN-HERE"
+export HUBOT_JENKINS_URL="http://x.x.x.x/"
+export HUBOT_JENKINS_AUTH="username:password"
+export HUBOT_JENKINS_CRUMB="JENKINS-CRUMB-VALUE-HERE"
+export EXTERNAL_SCRIPTS="hubot-help"
+
+echo -e "\n \033[01;32m STOP CONTAINER \033[01;37m"
+
+docker stop ${CONTAINER}
+
+echo -e "\n \033[01;32m REMOVE CONTAINER \033[01;37m"
+
+docker rm ${CONTAINER}
+
+echo -e "\n \033[01;32m DOCKER PULL \033[01;37m"
+
+docker pull "${REPO_IMAGES}/${IMAGE_NAME}::latest"
+
+echo -e "\n \033[01;32m RUN CONTAINER \033[01;37m"
+docker run -p ${PORT}:${PORT} "${IMAGE_NAME}:latest"
+
+docker run -d \
+        --name $HUBOT_NAME \
+        -e HUBOT_NAME=$HUBOT_NAME \
+        -e HUBOT_SLACK_TOKEN=$HUBOT_SLACK_TOKEN \
+        -e HUBOT_JENKINS_URL=$HUBOT_JENKINS_URL \
+        -e HUBOT_JENKINS_AUTH=$HUBOT_JENKINS_AUTH \
+        -e HUBOT_JENKINS_CRUMB=$HUBOT_JENKINS_CRUMB \
+        -e EXTERNAL_SCRIPTS=$EXTERNAL_SCRIPTS \
+        -p 8989:8989 \
+        -v $PWD/scripts:/home/hubot/scripts \
+        ${REPO_IMAGES}/${IMAGE_NAME}:${TAG}

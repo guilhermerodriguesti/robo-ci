@@ -1,0 +1,26 @@
+#!/bin/bash
+USER="infraestruturadevops"
+REPO_IMAGES="${USER}"
+IMAGE_NAME=$(basename "$PWD")
+TAG=`git rev-parse --short HEAD`
+CONTAINER="${IMAGE_NAME}"
+
+
+echo -e "\n \033[01;32m CREATE REPOSITORY \033[01;37m"
+
+echo -e "\n \033[01;32m LOGIN  REGISTRY \033[01;37m"
+
+cat ~/docker-login.txt | docker login --username "${USER}" --password-stdin
+
+echo -e "\n \033[01;32m BUILD IMAGE \033[01;37m"
+
+#docker build -t "${REPO_IMAGES}/${IMAGE_NAME}:${TAG}" -t "${REPO_IMAGES}/${IMAGE_NAME}:latest" .
+$PWD/docker-build
+
+echo -e "\n \033[01;32m PUSH IMAGE \033[01;37m"
+
+docker push "${REPO_IMAGES}/${IMAGE_NAME}:${TAG}"
+docker push "${REPO_IMAGES}/${IMAGE_NAME}:latest"
+
+
+
