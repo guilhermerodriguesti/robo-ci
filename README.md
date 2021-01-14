@@ -30,7 +30,7 @@ If not provided, hubot-help plugin will be ran as default.
 
 ## How to run
 
-First, grab the [jenkins-enhanced.coffee](https://bitbucket.org/guilhermerodriguesti/hubot-slack-jenkins/src/master/scripts/jenkins-enhanced.coffee)
+First, grab the [jenkins-enhanced.coffee](https://bitbucket.org/guilhermerodriguesti/robo-ci/src/master/scripts/jenkins-enhanced.coffee)
 file and place it on a local folder (which will be binded to the container)
 
 And run the container:
